@@ -6,11 +6,13 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import Editor from "./components/Editor";
 import Control from "./components/Controls";
 import EmbedOptions from "./components/EmbedOptions";
+import Preview from "./components/preview";
+import SketchPreview from "./components/SketchPreview";
 
 export default function Home() {
   const [code, setCode] = useState();
   const [playMode, setPlayMode] = useState("Stop");
-  // const [shouldPlay, setShouldPlay] = useState(false)
+  const [shouldPlay, setShouldPlay] = useState(false);
   const [embedMode, setEmbedMode] = useState("Iframe");
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export default function Home() {
 
   const handlePlay = (mode) => {
     setPlayMode(mode);
-    // shouldPlay(mode)
+    setShouldPlay(mode === "play" || mode === "Autoplay");
   };
 
   return (
@@ -33,6 +35,8 @@ export default function Home() {
           <Editor code={code} setCode={setCode} />
           <Control setPlayMode={handlePlay} playMode={playMode} />
           <EmbedOptions embedMode={embedMode} setEmbedMode={setEmbedMode} />
+          <SketchPreview code={code} />
+          <Preview embedMode={embedMode} shouldPlay={shouldPlay ? code : " "} />
         </ErrorBoundary>
       </div>
       ;
