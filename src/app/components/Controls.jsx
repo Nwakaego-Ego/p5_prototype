@@ -11,6 +11,7 @@ const Control = ({ playMode, setPlayMode }) => {
       >
         <option value="Stop">Stop</option>
         <option value="Play">Play</option>
+        <option value="Autoplay">Autoplay</option>
         <option value="Pause">Pause</option>
       </select>
     </>

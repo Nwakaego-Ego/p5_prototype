@@ -1,16 +1,24 @@
 // import Image from "next/image";
 "use client";
 import { useState, useEffect } from "react";
-import Iframe from "./components/Iframe";
+// import Iframe from "./components/Iframe";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Editor from "./components/Editor";
 import Control from "./components/Controls";
 import EmbedOptions from "./components/EmbedOptions";
 import Preview from "./components/preview";
-import SketchPreview from "./components/SketchPreview";
 
 export default function Home() {
-  const [code, setCode] = useState();
+  const [code, setCode] = useState(`function setup() {
+  createCanvas(400, 400);
+  background(220);
+}
+
+function draw() {
+  fill(255, 0, 0);
+  ellipse(mouseX, mouseY, 50, 50);
+}`);
+
   const [playMode, setPlayMode] = useState("Stop");
   const [shouldPlay, setShouldPlay] = useState(false);
   const [embedMode, setEmbedMode] = useState("Iframe");
@@ -24,22 +32,19 @@ export default function Home() {
 
   const handlePlay = (mode) => {
     setPlayMode(mode);
-    setShouldPlay(mode === "play" || mode === "Autoplay");
+    setShouldPlay(mode === "Play" || mode === "Autoplay");
   };
 
   return (
     <>
       <div>
         <ErrorBoundary>
-          <Iframe />
           <Editor code={code} setCode={setCode} />
           <Control setPlayMode={handlePlay} playMode={playMode} />
           <EmbedOptions embedMode={embedMode} setEmbedMode={setEmbedMode} />
-          <SketchPreview code={code} />
-          <Preview embedMode={embedMode} shouldPlay={shouldPlay ? code : " "} />
+          {shouldPlay && <Preview embedMode={embedMode} code={code} />}
         </ErrorBoundary>
       </div>
-      ;
     </>
   );
 }
