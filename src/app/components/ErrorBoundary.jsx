@@ -12,9 +12,8 @@ const ErrorBoundary = ({ children }) => {
       setErrorMessage(event.error?.message || "Unknown Error");
     };
 
-    return () => {
-      window.addEventListener("error", handleError);
-    };
+    window.addEventListener("error", handleError);
+    return () => window.removeEventListener("error", handleError);
   }, []);
 
   if (hasError) {
